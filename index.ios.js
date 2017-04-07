@@ -19,10 +19,13 @@ import {Provider} from 'react-redux';
 import {createStore, applyMiddleware, combineReduxers, compose} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import {createLogger} from 'redux-logger';
+import reducer from './App/reducers/index'
+
+
 
 const loggerMiddleware = createLogger({ predicate: (getState, action) => __DEV__});
 
-/*
+
 function configureStore(initialState) {
   const enhancer = compose(
     applyMiddleware(
@@ -30,14 +33,14 @@ function configureStore(initialState) {
       loggerMiddleware
       ),
     )
-  return createStore(reducer, intialState, enhancer);
+  return createStore(reducer, enhancer);
 }
 
 
 const store = configureStore({});
 
 
-*/
+
 
 export default class testNative extends Component {
   constructor(props) {

@@ -12,17 +12,28 @@ import {
   Text,
   View,
   WebView,
-  TouchableOpacity
+  TouchableOpacity,
+  TouchableHighlight,
+  Navigator
 } from 'react-native';
+
+//Components
+import Profile from './App/components/Profile'
+import Login from './App/components/Login'
+
+
+//Fb Stuff
+import {FBLogin, FBLoginManager} from 'react-native-facebook-login'
+
+
+
+
 //Redux stuff
 import {Provider} from 'react-redux';
 import {createStore, applyMiddleware, combineReduxers, compose} from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import {createLogger} from 'redux-logger';
 import reducer from './App/reducers/index'
-
-
-
 const loggerMiddleware = createLogger({ predicate: (getState, action) => __DEV__});
 
 
@@ -36,34 +47,85 @@ function configureStore(initialState) {
   return createStore(reducer, enhancer);
 }
 
+//Material UI Stuff
+import {ThemeProvider} from 'react-native-material-ui'
+
+
 
 const store = configureStore({});
 
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F5FCFF',
+  },
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10,
+  },
+  instructions: {
+    textAlign: 'center',
+    color: '#333333',
+    marginBottom: 5,
+  },
+});
 
 
-
-export default class testNative extends Component {
+export default class App extends Component {
   constructor(props) {
-    super(props)     
+    super(props)
+    this.state = {
+
+    }     
   }
 
+  handlePress() {
+    console.log('store', store.getState());
+  }
+
+
+  _renderScene(route, navigator) {
+    var globalNavigatorProps = { navigator }
+    switch(route.title) {
+      case "Profile":
+        return (
+          <Profile {...globalNavigatorProps} />
+        )
+      default:
+        return (
+          <Login />
+        ) 
+    }
+  }
+
+
+
   render() {
+    
+    const routes = [
+      {title: 'First Scene', index: 0},
+      {title: 'Second Scene', index: 1},
+    ];
     return (
-      <View style={{marginTop: 20}}>
-        <Text> fdsafadf </Text>
-      </View>
+      <ThemeProvider>
+        <Provider store={store}>
+          <Navigator
+            initialRoute={routes[0]}
+            initialRouteStack={routes}
+            renderScene={this._renderScene}
+          />
+        </Provider>
+      </ThemeProvider>
     )
   } 
-  
 }
 
 
-const App = () => (
-  <Provider store={store}>
-    <testNative />
-  </Provider>
-)
 
 
 
-AppRegistry.registerComponent('testNative', () => testNative);
+
+AppRegistry.registerComponent('testNative', () => App);

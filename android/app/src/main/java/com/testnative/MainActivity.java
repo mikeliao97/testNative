@@ -1,6 +1,7 @@
 package com.testnative;
 
 import com.facebook.react.ReactActivity;
+import com.magus.fblogin.FacebookLoginPackage;
 import com.github.yamill.orientation.OrientationPackage;
 import com.sensors.RNSensorsPackage;
 import com.sensormanager.SensorManagerPackage;

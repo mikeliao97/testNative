@@ -6,6 +6,9 @@ import {FBLogin, FBLoginManager} from 'react-native-facebook-login'
 //T comb, for forms
 import t from 'tcomb-form-native'
 
+//Import bottom navigation
+import BottomNavigationBar from './BottomNavigationBar'
+
 var Form = t.form.Form;
 var LoginModel = t.struct({
   username: t.String,
@@ -30,55 +33,31 @@ class Login extends Component {
   render() {
     var _this = this; 
     return (
-      <View style={styles.container}>      
-        <Form ref="frm" type={LoginModel} />
-         <FBLogin style={{ marginBottom: 10, }}
-        ref={(fbLogin) => { this.fbLogin = fbLogin }}
-        permissions={["email","user_friends", "user_events", "user_photos", "user_birthday"]}
-        loginBehavior={FBLoginManager.LoginBehaviors.Native}
-        onLogin={function(data){
-          console.log("Logged in!");
-          console.log(data);
-          _this.setState({ user : data.credentials });
-        }}
-        onLogout={function(){
-          console.log("Logged out.");
-          _this.setState({ user : null });
-        }}
-        onLoginFound={function(data){
-          console.log("Existing login found.");
-          console.log(data);
-          _this.setState({ user : data.credentials });
-        }}
-        onLoginNotFound={function(){
-          console.log("No user logged in.");
-          _this.setState({ user : null });
-        }}
-        onError={function(data){
-          console.log("ERROR");
-          console.log(data);
-        }}
-        onCancel={function(){
-          console.log("User cancelled.");
-        }}
-        onPermissionsMissing={function(data){
-          console.log("Check permissions!");
-          console.log(data);
-        }}
-      />
-      <TouchableHighlight onPress={this.handlePress.bind(this)} ><Text> click me </Text></TouchableHighlight>
-    </View>
+      <View style={styles.container}> 
+        <View style={styles.space} />           
+         <View style={styles.content} >
+          <Form ref="frm" type={LoginModel} />
+          <FBLogin style={{ marginBottom: 10, }}/>        
+         </View>
+        <View style={styles.space} ></View>      
+        <BottomNavigationBar />
+      </View>
+
     )
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,    
+  },
+  content: {
     flex: 1,
-    
     justifyContent: 'center',
-    alignItems: 'center',
-    
+    alignItems: 'center'
+  },
+  space: {
+    flex: 1
   }
 });
 

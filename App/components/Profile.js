@@ -1,8 +1,10 @@
 
 import React, { Component } from 'react';
 import {StyleSheet, View, Text, Picker} from 'react-native'
-
 import { Button, BottomNavigation} from 'react-native-material-ui'
+
+import BottomNavigationBar from './BottomNavigationBar'
+
 class Profile extends Component {
   constructor(props) {
     super(props)
@@ -22,11 +24,15 @@ class Profile extends Component {
   render() {
     console.log('button', Button);
     return (
-      <View >
+      <View style={{
+        flex: 1,
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+      }}>
 
         <Text> Welcome User! </Text>
 
-
+        
         <Picker style={styles.picker}
         selectedValue={''}
         onValueChange={(room) => this.setState({currentRoom: room})}>
@@ -41,47 +47,21 @@ class Profile extends Component {
         </View>
          <Button raised accent text="Spectate!" />       
 
-        <View style={styles.bottomNavigation}>
-          <BottomNavigation  active={this.state.active} hidden={false} >
-            <BottomNavigation.Action
-                key="today"
-                icon="today"
-                label="Today"
-                onPress={() => this.setState({ active: 'today' })}
-            />
-            <BottomNavigation.Action
-                key="people"
-                icon="people"
-                label="People"
-                onPress={() => this.setState({ active: 'people' })}
-            />
-            <BottomNavigation.Action
-                key="bookmark-border"
-                icon="bookmark-border"
-                label="Bookmark"
-                onPress={() => this.setState({ active: 'bookmark-border' })}
-            />
-            <BottomNavigation.Action
-                key="settings"
-                icon="settings"
-                label="Settings"
-                onPress={() => this.setState({ active: 'settings' })}
-            />
-          </BottomNavigation>
-        </View>
+        <View style={styles.space}><Text>fdsafsad</Text></View>        
+        <BottomNavigationBar />  
       </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  picker: {
-    marginTop: -80
+  picker: {    
+    flex: 4
   },
   button: {
-    marginBottom: 10
+    marginBottom: 15,    
   },
-  bottomNavigation: {
+  space: {
     flex: 1
   }
 });
